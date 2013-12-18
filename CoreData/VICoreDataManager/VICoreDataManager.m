@@ -5,6 +5,8 @@
 
 #import "VICoreDataManager.h"
 
+#import "TestFlight+AsyncLogging.h"
+
 @interface VICoreDataManager () {
     NSManagedObjectContext *_managedObjectContext;
     NSManagedObjectModel *_managedObjectModel;
@@ -361,6 +363,7 @@
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         [[self managedObjectContext] mergeChangesFromContextDidSaveNotification:notification];
+        TFLog(@"Saving changes to temp context with notification %@", notification);
         [[self managedObjectContext] processPendingChanges];
     });
 }
